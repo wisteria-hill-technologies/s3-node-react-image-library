@@ -1,0 +1,26 @@
+.ImageLibrary {
+  .content {
+    min-height: 20rem;
+    img {
+      max-height: 20rem;
+    }
+  }
+  .form-group {
+    display: flex;
+    align-items: center;
+    flex-flow: wrap;
+  }
+  .gridContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+    .gridItem {
+      min-height: 20rem;
+      .card-body {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      }
+    }
+  }
+
+}
