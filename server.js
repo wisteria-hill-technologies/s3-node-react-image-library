@@ -8,6 +8,7 @@ const expressValidator = require('express-validator'); //validator middleware fo
 const upload = require('./services/file-upload');
 const singleUpload = upload.single('uploadFile');
 const getS3ImageList = require('./services/get-S3-image-list');
+const emptyS3ImageFolder = require('./services/emptyS3ImageFolder');
 const s3 = require('./services/s3Instance');
 
 const app = express();
@@ -36,7 +37,8 @@ app.get('/api/hello', (req, res) => {
 });
 
 app.get('/api/images', async (req, res) => {
- const response = await getS3ImageList();
+ const response = await getS3ImageList('folder1');
+ console.log('s3 images>>>', response.Contents);
   res.send({ response });
 });
 
@@ -55,8 +57,13 @@ app.post('/api/images/delete', async (req, res) => {
       res.send({ success: true });
     }
   });
+});
 
+app.post('/api/images/delete-all', async (req, res) => {
+  const { message } = req.body || {};
 
+  await emptyS3ImageFolder('folder1');
+  res.send({ success: true });
 });
 
 const port = process.env.SERVER_PORT || 8080;

@@ -64,6 +64,22 @@ const ImageLibrary = () => {
     });
   };
 
+  const handleDeleteAll = () => {
+    setLoading(true);
+    const jsonObj = JSON.stringify({ message : "Delete all images!" });
+    fetch('/api/images/delete-all', {
+      method: 'POST',
+      body: jsonObj
+    }).then(res => res.json()).then(({ success }) => {
+      setLoading(false);
+      setMessages({ message: 'All Images Cleared!', isError: false });
+    }).catch(err => {
+      setLoading(false);
+      setMessages({ message: 'Failed to clear all images.', isError: true });
+      console.log(err);
+    });
+  };
+
   return (
     <div className="ImageLibrary">
       <div className="content m-auto w-100 p-3 border border-info shadow rounded">
@@ -88,6 +104,15 @@ const ImageLibrary = () => {
             disabled={!selectedFile}
           >
             Upload A New Image
+          </Button>
+          &nbsp;
+          <Button
+            className="my-2"
+            color="danger"
+            type="button"
+            onClick={() => handleDeleteAll()}
+          >
+            Delete all image files.
           </Button>
         </div>
         {

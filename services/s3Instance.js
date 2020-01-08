@@ -5,6 +5,6 @@ aws.config.update({
   accessKeyId: process.env.S3_ACCESS_KEY_ID,
   region: 'eu-west-2'
 });
-const s3 = new aws.S3();
+const s3 = new aws.S3({apiVersion: '2006-03-01'});
 
 module.exports = s3;
